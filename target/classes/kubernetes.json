@@ -1,0 +1,53 @@
+{
+  "id": "asus-list",
+  "kind": "List",
+  "apiVersion": "v1beta2",
+  "name": "asus-config",
+  "description": "Configuration for asus",
+  "items": [
+
+    {
+      "id": "asus-controller",
+      "kind": "ReplicationController",
+      "apiVersion": "v1beta1",
+      "desiredState": {
+        "replicas": 1,
+        "replicaSelector": {
+          "container": "java", 
+          "group": "quickstarts"
+        },
+        "podTemplate": {
+          "desiredState": {
+            "manifest": {
+              "version": "v1beta1",
+              "id": "asusPod",
+              "containers": [
+                {
+                  "name": "asus-container",
+                  "image": "${env.DOCKER_REGISTRY}/fabric8/asus:1.0-SNAPSHOT",
+                  "imagePullPolicy": "PullAlways",
+                  "env": [
+                  ],
+                  "ports": [
+                    {
+                      "containerPort": 8778
+    
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "labels": {
+            "container": "java", 
+            "group": "quickstarts"
+          }
+        }
+      },
+      "labels": {
+        "container": "java", 
+        "group": "quickstarts"
+      }
+    }
+  ]
+}
